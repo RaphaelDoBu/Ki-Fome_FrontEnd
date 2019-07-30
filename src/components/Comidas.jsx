@@ -1,28 +1,56 @@
 import React from 'react';
-import { Button, Row, Col, Container } from 'reactstrap';
-import Menu from '../database/menu.json'
-
+import {Card, Button, CardTitle, CardText, Container, Row, Col } from 'reactstrap';
+import Checkout from '../components/checkout'
 
 export default class Comidas extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state ={
+            preco : 0.0
+        }
+    }
+
+    valorProduto = (precoComida) =>{
+        const somaPrecoComida = precoComida + this.state.preco;
+
+        this.setState({
+            preco : somaPrecoComida
+        })
+        
+    }
+
+    exibirCheckout = () =>{
+        if(this.state.preco > 0.0){
+            return <Checkout comida={this.state.nomeComida} preco={this.state.preco}></Checkout>
+        }
     }
    
     render() {
         return (
             <Container>
-                <h1>aqui</h1>
-                <div>{this.props.tipo}</div>
-                <div>{Menu["food"].map((value) =>
-                    <div>
-                        <span>{value.title}</span>
-                        {/* <span>{value.name}</span>
-                        <span>{value.agency}</span> */}
-                    </div>)
-                    } 
-                </div>
+                <Row>
+                    <Col xs="6">
+                        <h4>Comida Selecionada: {this.props.tipo}</h4>
+                        <div>
+                            {this.props.tipoComidaFiltrada.map((comida, index) =>
+                                <div key={index}>
+                                    <Card body>
+                                        <CardTitle>{comida.title}</CardTitle>
+                                        <CardText>{comida.price}</CardText>
+                                        <Button onClick={()=> this.valorProduto(comida.price)}>Adicionar ao carrinho</Button>
+                                    </Card>
+                                </div>
+                                )
+                            }
+                        </div>
+                    </Col>
+                    <Col xs="6">
+                        {this.exibirCheckout()}
+                    </Col>
+                </Row>
+                    
             </Container>
-
             
         );
   }

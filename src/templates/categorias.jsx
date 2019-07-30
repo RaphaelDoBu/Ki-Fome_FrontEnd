@@ -3,22 +3,46 @@ import { Button, Row, Col, Container } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPizzaSlice, faAlignJustify, faFish, faHamburger, faBirthdayCake, faLeaf } from '@fortawesome/free-solid-svg-icons'
 import Comidas from '../components/Comidas.jsx'
+import Menu from '../database/menu.json'
 
 export default class Categorias extends React.Component {
     constructor(props) {
         super(props);
         this.tipoComida = this.tipoComida.bind(this);
+        this.filtrarTipoComida = this.filtrarTipoComida.bind(this)
 
-        this.state = { tipoComida: '' };
+        this.state = { 
+            tipoComida: '', 
+            comida: []
+         };
     }
-    
+   
     tipoComida = (tipoEscolhido) => {
         this.setState({
             tipoComida: tipoEscolhido
         })
-        alert(tipoEscolhido);
+        
+        this.state.comida=[]
+        this.filtrarTipoComida(tipoEscolhido)
     }
-    
+
+    filtrarTipoComida = (tipoComida) => {
+
+        if(tipoComida != "all"){
+            let cont = Menu["food"].map((comida) => {
+                if(comida.cuisine === tipoComida){
+                        this.state.comida.push(comida)
+                    }
+            })
+        }
+        else{
+            let cont = Menu["food"].map((comida) => {
+                this.state.comida.push(comida)
+            })
+        }
+        
+    }
+
     render() {
     return (
         <Container>
@@ -29,7 +53,7 @@ export default class Categorias extends React.Component {
                         <p></p>
                         <FontAwesomeIcon icon={faAlignJustify}></FontAwesomeIcon>
                     </Button>{' '}
-                    <Button color="primary" onClick={() => this.tipoComida("chinesa")}>Chinese
+                    <Button color="primary" onClick={() => this.tipoComida("chinese")}>Chinese
                         <p></p>
                         <FontAwesomeIcon icon={faFish}></FontAwesomeIcon>
                     </Button>{' '}
@@ -51,8 +75,7 @@ export default class Categorias extends React.Component {
                     </Button>{' '}
                 </Col>
             </Row>
-            {/* <h2>{this.state.tipoComida}</h2> */}
-            <Comidas tipo={this.state.tipoComida}></Comidas>
+            <Comidas tipo={this.state.tipoComida} tipoComidaFiltrada={this.state.comida}></Comidas>
         </Container>
     );
   }
