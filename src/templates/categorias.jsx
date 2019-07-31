@@ -27,7 +27,7 @@ export default class Categorias extends React.Component {
 
     filtrarTipoComida = (tipoComida) => {
 
-        if(tipoComida == "all"){
+        if(tipoComida === "all"){
             this.setState({
                 comida: Menu["food"]
             })
