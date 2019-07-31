@@ -22,25 +22,25 @@ export default class Categorias extends React.Component {
             tipoComida: tipoEscolhido
         })
         
-        this.state.comida=[]
         this.filtrarTipoComida(tipoEscolhido)
     }
 
     filtrarTipoComida = (tipoComida) => {
 
-        if(tipoComida != "all"){
-            let cont = Menu["food"].map((comida) => {
-                if(comida.cuisine === tipoComida){
-                        this.state.comida.push(comida)
-                    }
+        if(tipoComida == "all"){
+            this.setState({
+                comida: Menu["food"]
             })
         }
         else{
-            let cont = Menu["food"].map((comida) => {
-                this.state.comida.push(comida)
+            let comidaFiltrada = Menu["food"].filter((comida) => {
+                return comida.cuisine === tipoComida;
+            })
+
+            this.setState({
+                comida: comidaFiltrada
             })
         }
-        
     }
 
     render() {

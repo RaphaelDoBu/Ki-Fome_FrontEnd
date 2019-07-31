@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Button, CardTitle, CardText, Container, Row, Col } from 'reactstrap';
+import {Card, Button, CardTitle, CardText, Container, Row, Col, CardBody, CardSubtitle, CardLink } from 'reactstrap';
 
 
 export default class Checkout extends React.Component {
@@ -11,7 +11,24 @@ export default class Checkout extends React.Component {
 
         return (
             <Container>
-                <h1>Preço total: {this.props.preco}</h1>
+                <Card>
+                    <CardBody>
+                        <CardTitle><h2>Checkout</h2></CardTitle>
+                        <CardSubtitle><h4>Nome: Usuário</h4></CardSubtitle>
+                    </CardBody>
+                    <CardBody>
+                        <div>
+                            {this.props.comida.map((comidaCheckout, index) =>
+                            <div key={index}>
+                                <CardText>{comidaCheckout.qtd}x {comidaCheckout.nome}.........{comidaCheckout.preco}</CardText>
+                            </div>
+                            )
+                            }
+                        </div>
+                        <CardLink href="#">Card Link</CardLink>
+                        <CardLink href="#">Another Link</CardLink>
+                    </CardBody>
+                </Card>
             </Container>
             
         );
